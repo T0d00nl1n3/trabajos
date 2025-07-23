@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cápsula Hipermedia: Informática Básica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header h1 {
+            color: #4a5568;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header p {
+            color: #718096;
+            font-size: 1.2em;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(238, 90, 36, 0.3);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(238, 90, 36, 0.4);
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(45deg, #10ac84, #00d2d3);
+            box-shadow: 0 5px 15px rgba(16, 172, 132, 0.3);
+        }
+        
+        .content-section {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .content-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+        
+        .content-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .interactive-element {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .interactive-element:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(9, 132, 227, 0.3);
+        }
+        
+        .quiz-container {
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .quiz-question {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #856404;
+        }
+        
+        .quiz-options {
+            list-style: none;
+        }
+        
+        .quiz-options li {
+            background: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .quiz-options li:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+        }
+        
+        .audio-player {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .audio-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .audio-btn:hover {
+            background: #219a52;
+            transform: scale(1.05);
+        }
+        
+        .video-placeholder {
+            background: #2c3e50;
+            color: white;
+            padding: 60px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .video-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(52, 152, 219, 0.3), rgba(155, 89, 182, 0.3));
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+        
+        .video-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .progress-bar {
+            background: #ecf0f1;
+            height: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🖥️ Informática Básica</h1>
+            <p>Explora los fundamentos de la tecnología digital</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <button class="nav-btn active" onclick="showSection('hardware')">Hardware</button>
+            <button class="nav-btn" onclick="showSection('software')">Software</button>
+            <button class="nav-btn" onclick="showSection('redes')">Redes</button>
+            <button class="nav-btn" onclick="showSection('seguridad')">Seguridad</button>
+            <button class="nav-btn" onclick="showSection('evaluacion')">Evaluación</button>
+        </div>
+        
+        <!-- Sección Hardware -->
+        <div id="hardware" class="content-section active">
+            <h2>🔧 Hardware: Los Componentes Físicos</h2>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Procesador (CPU)</h3>
+                    <p>El "cerebro" de la computadora que ejecuta las instrucciones. Medido en GHz, determina la velocidad de procesamiento.</p>
+                    <div class="interactive-element" onclick="window.open('https://www.intel.la/content/www/xl/es/products/details/processors.html', '_blank')">
+                        🔍 Explorar detalles del CPU (Intel)
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <h3>Memoria RAM</h3>
+                    <p>Almacenamiento temporal de datos. Más RAM permite ejecutar más programas simultáneamente.</p>
+                    <div class="interactive-element" onclick="showRAMDemo()">
+                        📊 Demostración de RAM
+                    </div>
+                </div>
+            </div>
+            
+            <div class="audio-player">
+                <h3>🎧 Audio explicativo: Componentes básicos</h3>
+                <p>Escucha una explicación detallada sobre los componentes del hardware</p>
+                <button class="audio-btn" onclick="window.open('https://podcasts.apple.com/do/podcast/partes-b%C3%A1sicas-de-la-computadora/id1567264792', '_blank')">
+                    🎧 Escuchar Podcast en Apple Podcasts
+                </button>
+            </div>
+            
+            <div class="video-placeholder">
+                <div class="video-content">
+                    <h3>📹 Video: Ensamblaje de una PC</h3>
+                    <p>Observa cómo se ensamblan los componentes de una computadora</p>
+                    <button class="audio-btn" onclick="window.open('https://youtu.be/hWbIlYzkls4', '_blank')">
+                        ▶️ Ver Video en YouTube
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sección Software -->
+        <div id="software" class="content-section">
+            <h2>💻 Software: Los Programas y Sistemas</h2>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Sistema Operativo</h3>
+                    <p>Software principal que gestiona el hardware y otros programas. Ejemplos: Windows, macOS, Linux.</p>
+                    <div class="interactive-element" onclick="compareOS()">
+                        ⚖️ Comparar Sistemas Operativos
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <h3>Aplicaciones</h3>
+                    <p>Programas específicos para tareas particulares: navegadores, editores de texto, juegos, etc.</p>
+                    <div class="interactive-element" onclick="exploreApps()">
+                        🎯 Explorar Tipos de Aplicaciones
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">¿Cuál es la función principal de un Sistema Operativo?</div>
+                <ul class="quiz-options">
+                    <li onclick="checkAnswer(this, false)">Editar documentos de texto</li>
+                    <li onclick="checkAnswer(this, true)">Gestionar el hardware y otros programas</li>
+                    <li onclick="checkAnswer(this, false)">Navegar por internet</li>
+                    <li onclick="checkAnswer(this, false)">Reproducir música</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Sección Redes -->
+        <div id="redes" class="content-section">
+            <h2>🌐 Redes: Conexión y Comunicación</h2>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Internet</h3>
+                    <p>Red global que conecta millones de dispositivos. Permite compartir información y recursos.</p>
+                    <div class="interactive-element" onclick="exploreInternet()">
+                        🌍 Explorar cómo funciona Internet
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <h3>Protocolos de Red</h3>
+                    <p>Reglas que permiten la comunicación entre dispositivos: HTTP, TCP/IP, WiFi, etc.</p>
+                    <div class="interactive-element" onclick="learnProtocols()">
+                        📡 Aprender sobre Protocolos
+                    </div>
+                </div>
+            </div>
+            
+            <div class="video-placeholder">
+                <div class="video-content">
+                    <h3>📹 Simulación: Viaje de un dato por Internet</h3>
+                    <p>Visualiza cómo viaja la información desde tu dispositivo hasta su destino</p>
+                    <button class="audio-btn" onclick="window.open('https://youtu.be/rw41W8crZ_Y', '_blank')">
+                        ▶️ Ver Video en YouTube
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sección Seguridad -->
+        <div id="seguridad" class="content-section">
+            <h2>🔒 Seguridad Informática</h2>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Contraseñas Seguras</h3>
+                    <p>Combinación de letras, números y símbolos. Únicas para cada cuenta y cambiadas regularmente.</p>
+                    <div class="interactive-element" onclick="testPassword()">
+                        🔐 Probador de Contraseñas
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <h3>Malware</h3>
+                    <p>Software malicioso: virus, troyanos, spyware. Importante usar antivirus actualizado.</p>
+                    <div class="interactive-element" onclick="learnMalware()">
+                        🦠 Identificar Amenazas
+                    </div>
+                </div>
+            </div>
+            
+            <div class="audio-player">
+                <h3>🎧 Podcast: Consejos de Seguridad Digital</h3>
+                <p>Escucha recomendaciones prácticas para proteger tu información</p>
+                <button class="audio-btn" onclick="window.open('https://open.spotify.com/show/0hN43ix4foCWbQ96lfK36d', '_blank')">
+                    🎵 Escuchar Podcast en Spotify
+                </button>
+            </div>
+        </div>
+        
+        <!-- Sección Evaluación -->
+        <div id="evaluacion" class="content-section">
+            <h2>📝 Evaluación Final</h2>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">Pregunta 1: ¿Qué componente determina principalmente la velocidad de procesamiento?</div>
+                <ul class="quiz-options">
+                    <li onclick="checkFinalAnswer(this, true, 1)">CPU (Procesador)</li>
+                    <li onclick="checkFinalAnswer(this, false, 1)">Disco Duro</li>
+                    <li onclick="checkFinalAnswer(this, false, 1)">Monitor</li>
+                    <li onclick="checkFinalAnswer(this, false, 1)">Teclado</li>
+                </ul>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">Pregunta 2: ¿Cuál es una característica de una contraseña segura?</div>
+                <ul class="quiz-options">
+                    <li onclick="checkFinalAnswer(this, false, 2)">Usar solo letras minúsculas</li>
+                    <li onclick="checkFinalAnswer(this, false, 2)">Usar información personal</li>
+                    <li onclick="checkFinalAnswer(this, true, 2)">Combinar letras, números y símbolos</li>
+                    <li onclick="checkFinalAnswer(this, false, 2)">Usar la misma para todas las cuentas</li>
+                </ul>
+            </div>
+            
+            <div id="finalResult" style="display: none; background: #d4edda; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                <h3>🎉 ¡Evaluación Completada!</h3>
+                <p id="scoreText"></p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let currentSection = 'hardware';
+        let visitedSections = new Set(['hardware']);
+        let finalScore = 0;
+        let questionsAnswered = 0;
+        
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Actualizar botones de navegación
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Actualizar progreso
+            visitedSections.add(sectionId);
+            updateProgress();
+            
+            currentSection = sectionId;
+        }
+        
+        function updateProgress() {
+            const totalSections = 5;
+            const progress = (visitedSections.size / totalSections) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+        
+        function showCPUDetails() {
+            alert('🔧 CPU Details:\n\n• Núcleos: Más núcleos = mejor multitarea\n• Frecuencia: GHz indican velocidad\n• Cache: Memoria ultra-rápida del CPU\n• Arquitectura: x86, ARM, etc.');
+        }
+        
+        function showRAMDemo() {
+            alert('📊 RAM Demonstration:\n\n• 4GB: Uso básico\n• 8GB: Uso intermedio\n• 16GB+: Uso profesional\n\n💡 Más RAM = Menos uso del disco duro como memoria virtual');
+        }
+        
+        function compareOS() {
+            alert('⚖️ Comparación de Sistemas Operativos:\n\n🪟 Windows: Más compatible con software\n🍎 macOS: Diseño elegante, seguro\n🐧 Linux: Código abierto, personalizable\n📱 Android/iOS: Para dispositivos móviles');
+        }
+        
+        function exploreApps() {
+            alert('🎯 Tipos de Aplicaciones:\n\n• Productividad: Office, Google Docs\n• Navegación: Chrome, Firefox\n• Multimedia: VLC, Photoshop\n• Comunicación: WhatsApp, Zoom\n• Entretenimiento: Netflix, Steam');
+        }
+        
+        function exploreInternet() {
+            alert('🌍 Cómo funciona Internet:\n\n1. Tu dispositivo se conecta al ISP\n2. ISP te conecta a la red global\n3. Los datos viajan por cables/fibra\n4. Servidores DNS traducen direcciones\n5. La información llega a su destino');
+        }
+        
+        function learnProtocols() {
+            alert('📡 Protocolos de Red:\n\n• HTTP/HTTPS: Navegación web\n• TCP/IP: Comunicación básica\n• WiFi: Conexión inalámbrica\n• Bluetooth: Dispositivos cercanos\n• FTP: Transferencia de archivos');
+        }
+        
+        function testPassword() {
+            const password = prompt('🔐 Ingresa una contraseña para evaluar su fortaleza:');
+            if (password) {
+                let strength = 0;
+                let feedback = '🔍 Análisis de tu contraseña:\n\n';
+                
+                if (password.length >= 8) {
+                    strength += 20;
+                    feedback += '✅ Longitud adecuada (8+ caracteres)\n';
+                } else {
+                    feedback += '❌ Muy corta (mínimo 8 caracteres)\n';
+                }
+                
+                if (/[a-z]/.test(password)) {
+                    strength += 20;
+                    feedback += '✅ Contiene minúsculas\n';
+                }
+                
+                if (/[A-Z]/.test(password)) {
+                    strength += 20;
+                    feedback += '✅ Contiene mayúsculas\n';
+                }
+                
+                if (/[0-9]/.test(password)) {
+                    strength += 20;
+                    feedback += '✅ Contiene números\n';
+                }
+                
+                if (/[^a-zA-Z0-9]/.test(password)) {
+                    strength += 20;
+                    feedback += '✅ Contiene símbolos especiales\n';
+                }
+                
+                feedback += `\n🎯 Fortaleza: ${strength}%`;
+                
+                if (strength >= 80) feedback += '\n🛡️ ¡Excelente contraseña!';
+                else if (strength >= 60) feedback += '\n⚠️ Contraseña moderada';
+                else feedback += '\n🚨 Contraseña débil';
+                
+                alert(feedback);
+            }
+        }
+        
+        function learnMalware() {
+            alert('🦠 Tipos de Malware:\n\n• Virus: Se replica en archivos\n• Troyanos: Se disfrazan de software legítimo\n• Spyware: Roba información personal\n• Ransomware: Secuestra archivos\n• Adware: Muestra publicidad invasiva\n\n🛡️ Protección: Antivirus + Sentido común');
+        }
+        
+        function playRealAudio(audioUrl) {
+            // Crear y reproducir audio dinámicamente
+            const audio = new Audio(audioUrl);
+            audio.play().catch(e => {
+                console.log('Error reproduciendo audio:', e);
+                alert('No se pudo reproducir el audio. Verifica la URL: ' + audioUrl);
+            });
+        }
+        
+        function openExternalLink(url, description) {
+            if (confirm(`¿Deseas abrir ${description} en una nueva ventana?`)) {
+                window.open(url, '_blank');
+            }
+        }
+        
+        function playAudio(type) {
+            const messages = {
+                'hardware': '🎧 Reproduciendo: "Los componentes de hardware trabajan juntos como una orquesta. El CPU procesa, la RAM almacena temporalmente, y el disco duro guarda permanentemente..."',
+                'security': '🎧 Reproduciendo: "La seguridad digital es responsabilidad de todos. Usa contraseñas únicas, mantén software actualizado, y desconfía de enlaces sospechosos..."'
+            };
+            
+            alert(messages[type] || '🎧 Reproduciendo contenido de audio...');
+        }
+        
+        function playVideo(type) {
+            const messages = {
+                'assembly': '📹 Reproduciendo: Video de ensamblaje de PC paso a paso...',
+                'internet': '📹 Iniciando simulación: Observa cómo un dato viaja desde tu computadora hasta el servidor...'
+            };
+            
+            alert(messages[type] || '📹 Reproduciendo contenido de video...');
+        }
+        
+        function checkAnswer(element, isCorrect) {
+            const options = element.parentNode.querySelectorAll('li');
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                if (opt === element) {
+                    opt.style.backgroundColor = isCorrect ? '#d4edda' : '#f8d7da';
+                    opt.style.borderColor = isCorrect ? '#28a745' : '#dc3545';
+                } else if (opt.textContent.includes('Gestionar el hardware')) {
+                    opt.style.backgroundColor = '#d4edda';
+                    opt.style.borderColor = '#28a745';
+                }
+            });
+            
+            setTimeout(() => {
+                alert(isCorrect ? '✅ ¡Correcto! El Sistema Operativo gestiona el hardware y otros programas.' : '❌ Incorrecto. La respuesta correcta es: Gestionar el hardware y otros programas.');
+            }, 500);
+        }
+        
+        function checkFinalAnswer(element, isCorrect, questionNum) {
+            const options = element.parentNode.querySelectorAll('li');
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                if (opt === element) {
+                    opt.style.backgroundColor = isCorrect ? '#d4edda' : '#f8d7da';
+                    opt.style.borderColor = isCorrect ? '#28a745' : '#dc3545';
+                }
+            });
+            
+            if (isCorrect) finalScore++;
+            questionsAnswered++;
+            
+            if (questionsAnswered === 2) {
+                setTimeout(() => {
+                    document.getElementById('finalResult').style.display = 'block';
+                    document.getElementById('scoreText').textContent = `Tu puntuación: ${finalScore}/2 (${(finalScore/2*100)}%)`;
+                }, 1000);
+            }
+        }
+        
+        // Inicializar progreso
+        updateProgress();
+    </script>
+</body>
+</html>

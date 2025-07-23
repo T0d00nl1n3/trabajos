@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación: Explorando el Mundo Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .header .subject-info {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .instructions {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .form-content {
+            padding: 40px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin: 30px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #4facfe;
+            font-weight: 600;
+        }
+        
+        .question-block {
+            margin-bottom: 35px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #4facfe;
+            transition: all 0.3s ease;
+        }
+        
+        .question-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .option:hover {
+            border-color: #4facfe;
+            background: #f0f8ff;
+            transform: translateX(5px);
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 12px;
+            margin-top: 2px;
+            transform: scale(1.2);
+            accent-color: #4facfe;
+        }
+        
+        .option label {
+            cursor: pointer;
+            font-size: 1rem;
+            color: #34495e;
+            flex: 1;
+            line-height: 1.4;
+        }
+        
+        .true-false {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .tf-option {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .tf-option:hover {
+            border-color: #4facfe;
+            background: #f0f8ff;
+            transform: translateY(-3px);
+        }
+        
+        .tf-option.true {
+            color: #27ae60;
+        }
+        
+        .tf-option.false {
+            color: #e74c3c;
+        }
+        
+        .tf-option input[type="radio"] {
+            display: none;
+        }
+        
+        .tf-option input[type="radio"]:checked + span {
+            background: #4facfe;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        
+        .justification-area {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(79, 172, 254, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #4facfe;
+        }
+        
+        .justification-area textarea {
+            width: 100%;
+            height: 80px;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+        
+        .justification-area textarea:focus {
+            outline: none;
+            border-color: #4facfe;
+            background: white;
+        }
+        
+        .justification-area label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.9rem;
+        }
+        
+        .submit-section {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e1e8ed;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 18px 45px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+            margin-right: 15px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(79, 172, 254, 0.4);
+        }
+        
+        .reset-btn {
+            background: transparent;
+            color: #4facfe;
+            padding: 18px 35px;
+            border: 2px solid #4facfe;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .reset-btn:hover {
+            background: #4facfe;
+            color: white;
+        }
+        
+        .results {
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            display: none;
+            border: 2px solid #4facfe;
+        }
+        
+        .results h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        
+        .score {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4facfe;
+            margin-bottom: 20px;
+        }
+        
+        .feedback-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: white;
+            border-left: 5px solid #4facfe;
+        }
+        
+        .feedback-correct {
+            border-left-color: #27ae60;
+            background: #f8fff9;
+        }
+        
+        .feedback-incorrect {
+            border-left-color: #e74c3c;
+            background: #fff8f8;
+        }
+        
+        .feedback-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .feedback-text {
+            line-height: 1.4;
+            color: #555;
+        }
+        
+        @media (max-width: 768px) {
+            .true-false {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .form-content {
+                padding: 25px;
+            }
+            
+            .submit-btn, .reset-btn {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💻 Explorando el Mundo Digital</h1>
+            <div class="subject-info">
+                <strong>Materia:</strong> Tecnología | <strong>Grado:</strong> 5to Grado de Primaria
+            </div>
+            <div class="instructions">
+                <strong>Instrucciones:</strong> Lee cada pregunta cuidadosamente y selecciona la respuesta correcta. Para las preguntas de Verdadero o Falso, además de seleccionar, debes escribir una breve justificación.
+            </div>
+        </div>
+        
+        <div class="form-content">
+            <form id="quizForm">
+                <div class="section-title">📝 Sección 1: Selección Múltiple</div>
+                
+                <!-- Pregunta 1 -->
+                <div class="question-block">
+                    <div class="question">1. ¿Cuál de las siguientes opciones describe mejor por qué las computadoras son importantes en nuestra vida diaria?</div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q1a" name="q1" value="a">
+                            <label for="q1a">Solo sirven para jugar videojuegos.</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q1b" name="q1" value="b">
+                            <label for="q1b">Nos ayudan a trabajar, aprender, comunicarnos y entretenernos.</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q1c" name="q1" value="c">
+                            <label for="q1c">Solo las usan los científicos en laboratorios.</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q1d" name="q1" value="d">
+                            <label for="q1d">Son objetos de decoración en la casa.</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pregunta 2 -->
+                <div class="question-block">
+                    <div class="question">2. ¿Cómo eran las primeras computadoras en comparación con las de hoy?</div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q2a" name="q2" value="a">
+                            <label for="q2a">Eran muy pequeñas y cabían en el bolsillo.</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q2b" name="q2" value="b">
+                            <label for="q2b">Eran similares a las laptops modernas.</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q2c" name="q2" value="c">
+                            <label for="q2c">Eran máquinas muy grandes que ocupaban habitaciones enteras.</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q2d" name="q2" value="d">
+                            <label for="q2d">No existían las computadoras antes del siglo XXI.</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pregunta 3 -->
+                <div class="question-block">
+                    <div class="question">3. Según lo que aprendimos, ¿cuál de estos dispositivos es también un tipo de computadora que usamos a diario en casa?</div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q3a" name="q3" value="a">
+                            <label for="q3a">Un lápiz.</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q3b" name="q3" value="b">
+                            <label for="q3b">Un teléfono inteligente (smartphone).</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q3c" name="q3" value="c">
+                            <label for="q3c">Una escoba.</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q3d" name="q3" value="d">
+                            <label for="q3d">Un plato.</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-title">✅❌ Sección 2: Verdadero o Falso (con Justificación)</div>
+
+                <!-- Pregunta 4 -->
+                <div class="question-block">
+                    <div class="question">4. Las computadoras solo se inventaron en los últimos 20 años.</div>
+                    <div class="true-false">
+                        <div class="tf-option true">
+                            <input type="radio" id="q4v" name="q4" value="true">
+                            <label for="q4v"><span>✓ Verdadero</span></label>
+                        </div>
+                        <div class="tf-option false">
+                            <input type="radio" id="q4f" name="q4" value="false">
+                            <label for="q4f"><span>✗ Falso</span></label>
+                        </div>
+                    </div>
+                    <div class="justification-area">
+                        <label for="q4j">Justifica tu respuesta:</label>
+                        <textarea id="q4j" name="q4j" placeholder="Escribe aquí tu justificación..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Pregunta 5 -->
+                <div class="question-block">
+                    <div class="question">5. El propósito principal de una computadora es procesar información y ayudarnos a realizar tareas.</div>
+                    <div class="true-false">
+                        <div class="tf-option true">
+                            <input type="radio" id="q5v" name="q5" value="true">
+                            <label for="q5v"><span>✓ Verdadero</span></label>
+                        </div>
+                        <div class="tf-option false">
+                            <input type="radio" id="q5f" name="q5" value="false">
+                            <label for="q5f"><span>✗ Falso</span></label>
+                        </div>
+                    </div>
+                    <div class="justification-area">
+                        <label for="q5j">Justifica tu respuesta:</label>
+                        <textarea id="q5j" name="q5j" placeholder="Escribe aquí tu justificación..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Pregunta 6 -->
+                <div class="question-block">
+                    <div class="question">6. Las computadoras solo son útiles para jugar y no para aprender.</div>
+                    <div class="true-false">
+                        <div class="tf-option true">
+                            <input type="radio" id="q6v" name="q6" value="true">
+                            <label for="q6v"><span>✓ Verdadero</span></label>
+                        </div>
+                        <div class="tf-option false">
+                            <input type="radio" id="q6f" name="q6" value="false">
+                            <label for="q6f"><span>✗ Falso</span></label>
+                        </div>
+                    </div>
+                    <div class="justification-area">
+                        <label for="q6j">Justifica tu respuesta:</label>
+                        <textarea id="q6j" name="q6j" placeholder="Escribe aquí tu justificación..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Pregunta 7 -->
+                <div class="question-block">
+                    <div class="question">7. La evolución de las computadoras ha permitido que sean más grandes, pesadas y lentas con el tiempo.</div>
+                    <div class="true-false">
+                        <div class="tf-option true">
+                            <input type="radio" id="q7v" name="q7" value="true">
+                            <label for="q7v"><span>✓ Verdadero</span></label>
+                        </div>
+                        <div class="tf-option false">
+                            <input type="radio" id="q7f" name="q7" value="false">
+                            <label for="q7f"><span>✗ Falso</span></label>
+                        </div>
+                    </div>
+                    <div class="justification-area">
+                        <label for="q7j">Justifica tu respuesta:</label>
+                        <textarea id="q7j" name="q7j" placeholder="Escribe aquí tu justificación..."></textarea>
+                    </div>
+                </div>
+
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn">📊 Enviar Evaluación</button>
+                    <button type="button" class="reset-btn" onclick="resetForm()">🔄 Reiniciar</button>
+                </div>
+            </form>
+
+            <div id="results" class="results">
+                <h3>🎯 Resultados de tu Evaluación</h3>
+                <div class="score" id="score"></div>
+                <div id="feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            q1: 'b',
+            q2: 'c', 
+            q3: 'b',
+            q4: 'false',
+            q5: 'true',
+            q6: 'false',
+            q7: 'false'
+        };
+
+        const feedback = {
+            q1: {
+                correct: "¡Excelente! Las computadoras son herramientas muy versátiles que facilitan muchas de nuestras actividades diarias, desde hacer tareas escolares hasta hablar con nuestros amigos o ver películas.",
+                incorrect: "¡Sigue intentándolo! Aunque jugar videojuegos es divertido, las computadoras tienen muchísimos más usos importantes en nuestra vida cotidiana. Piensa en cómo las usamos en la escuela o en casa."
+            },
+            q2: {
+                correct: "¡Correcto! Las primeras computadoras eran enormes y requerían mucho espacio. ¡Han evolucionado mucho para volverse tan compactas como las conocemos hoy!",
+                incorrect: "¡Casi! Al principio, las computadoras eran muy diferentes. Recuerda el video de la historia de las computadoras. Eran gigantescas, no pequeñas."
+            },
+            q3: {
+                correct: "¡Así es! Tu teléfono inteligente es un ejemplo perfecto de una computadora portátil que llevas contigo a todas partes, con muchas funciones similares a las de una computadora de escritorio.",
+                incorrect: "Incorrecto. Un lápiz, una escoba y un plato son objetos, pero no son computadoras. Piensa en el artículo sobre las computadoras en nuestro hogar."
+            },
+            q4: {
+                correct: "¡Correcto! Las computadoras tienen una historia que se remonta a muchas décadas atrás, con las primeras máquinas que ayudaban a calcular surgiendo mucho antes de los últimos 20 años.",
+                justification: "Las computadoras tienen una historia que se remonta a muchas décadas atrás, con las primeras máquinas que ayudaban a calcular surgiendo mucho antes de los últimos 20 años. Hemos visto su evolución desde el siglo pasado."
+            },
+            q5: {
+                correct: "¡Perfecto! Has entendido correctamente cuál es el propósito fundamental de una computadora.",
+                justification: "El objetivo fundamental de una computadora es tomar datos (información de entrada), procesarlos rápidamente y generar un resultado (información de salida) para asistirnos en diversas actividades."
+            },
+            q6: {
+                correct: "¡Excelente! Has comprendido que las computadoras son herramientas muy poderosas para el aprendizaje.",
+                justification: "Las computadoras son herramientas muy poderosas para el aprendizaje, permitiéndonos investigar, acceder a información, realizar cursos en línea y desarrollar habilidades a través de programas educativos."
+            },
+            q7: {
+                correct: "¡Muy bien! Has entendido correctamente cómo ha sido la evolución de las computadoras.",
+                justification: "Al contrario, la evolución de las computadoras ha permitido que se vuelvan cada vez más pequeñas, ligeras, potentes y rápidas, facilitando su uso y portabilidad."
+            }
+        };
+
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let score = 0;
+            let totalQuestions = Object.keys(correctAnswers).length;
+            let feedbackHtml = '';
+            
+            for (let question in correctAnswers) {
+                const userAnswer = document.querySelector(`input[name="${question}"]:checked`);
+                const isCorrect = userAnswer && userAnswer.value === correctAnswers[question];
+                const questionNum = question.slice(1);
+                
+                if (isCorrect) {
+                    score++;
+                    feedbackHtml += `
+                        <div class="feedback-item feedback-correct">
+                            <div class="feedback-title">✅ Pregunta ${questionNum}: Correcto</div>
+                            <div class="feedback-text">${feedback[question].correct}</div>
+                        </div>
+                    `;
+                } else {
+                    feedbackHtml += `
+                        <div class="feedback-item feedback-incorrect">
+                            <div class="feedback-title">❌ Pregunta ${questionNum}: Incorrecto</div>
+                            <div class="feedback-text">${feedback[question].incorrect || 'Revisa el material de estudio para comprender mejor este concepto.'}</div>
+                        </div>
+                    `;
+                }
+
+                // Mostrar justificación esperada para preguntas V/F
+                if (question.startsWith('q') && parseInt(questionNum) > 3 && feedback[question].justification) {
+                    const userJustification = document.querySelector(`textarea[name="${question}j"]`).value.trim();
+                    feedbackHtml += `
+                        <div class="feedback-item" style="margin-left: 20px; background: #f0f8ff; border-left-color: #4facfe;">
+                            <div class="feedback-title">📝 Justificación esperada:</div>
+                            <div class="feedback-text">${feedback[question].justification}</div>
+                            ${userJustification ? `
+                                <div style="margin-top: 10px;">
+                                    <strong>Tu justificación:</strong><br>
+                                    <em>"${userJustification}"</em>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+            }
+            
+            const percentage = Math.round((score / totalQuestions) * 100);
+            let scoreColor = '#e74c3c';
+            let scoreEmoji = '😔';
+            
+            if (percentage >= 90) {
+                scoreColor = '#27ae60';
+                scoreEmoji = '🎉';
+            } else if (percentage >= 70) {
+                scoreColor = '#f39c12';
+                scoreEmoji = '😊';
+            }
+            
+            document.getElementById('score').innerHTML = `<span style="color: ${scoreColor}">${scoreEmoji} ${score}/${totalQuestions} (${percentage}%)</span>`;
+            document.getElementById('feedback').innerHTML = feedbackHtml;
+            document.getElementById('results').style.display = 'block';
+            
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        function resetForm() {
+            document.getElementById('quizForm').reset();
+            document.getElementById('results').style.display = 'none';
+        }
+
+        // Añadir efectos de interacción
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                }
+            });
+        });
+
+        document.querySelectorAll('.tf-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

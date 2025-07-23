@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Qué es una computadora y por qué la usamos?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .presentation-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .slide {
+            display: none;
+            width: 90vw;
+            height: 85vh;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        h2 {
+            font-size: 2.8rem;
+            margin-bottom: 40px;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        h3 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            color: #87CEEB;
+        }
+        
+        .timeline {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .timeline-item {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 15px;
+            width: 200px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .timeline-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .year {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 15px;
+        }
+        
+        .computer-type {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #E6E6FA;
+        }
+        
+        .description {
+            font-size: 1rem;
+            color: #B0E0E6;
+            line-height: 1.4;
+        }
+        
+        .computer-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .definition-box {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 40px;
+            margin: 30px 0;
+            border: 3px solid #FFD700;
+            backdrop-filter: blur(15px);
+        }
+        
+        .definition-text {
+            font-size: 1.8rem;
+            line-height: 1.6;
+            color: #F0F8FF;
+            margin-bottom: 20px;
+        }
+        
+        .daily-life-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .life-category {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s;
+        }
+        
+        .life-category:hover {
+            transform: scale(1.05);
+        }
+        
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #FFD700;
+        }
+        
+        .category-examples {
+            font-size: 1.1rem;
+            color: #E6E6FA;
+            line-height: 1.5;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .slide-indicator {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .intro-slide {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+        }
+        
+        .history-slide {
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.8), rgba(92, 107, 192, 0.8));
+        }
+        
+        .definition-slide {
+            background: linear-gradient(135deg, rgba(56, 178, 172, 0.8), rgba(129, 230, 217, 0.8));
+        }
+        
+        .importance-slide {
+            background: linear-gradient(135deg, rgba(251, 194, 235, 0.8), rgba(166, 193, 238, 0.8));
+        }
+        
+        .facts-list {
+            text-align: left;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .fact-item {
+            background: rgba(255, 255, 255, 0.1);
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #FFD700;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .highlight {
+            color: #FFD700;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.8rem; }
+            .slide { padding: 20px; }
+            .timeline { flex-direction: column; }
+            .timeline-item { width: 90%; }
+            .daily-life-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide-indicator">
+            <span id="slideNumber">1</span> / 5
+        </div>
+        
+        <!-- Slide 1: Introducción -->
+        <div class="slide active intro-slide">
+            <h1>💻 ¿Qué es una computadora y por qué la usamos?</h1>
+            <div style="font-size: 2rem; margin: 40px 0; color: #E6E6FA;">
+                🎯 <strong>Objetivos de hoy:</strong>
+            </div>
+            <div style="font-size: 1.6rem; line-height: 2; color: #F0F8FF;">
+                ✨ Conocer la historia de las computadoras<br>
+                🧠 Entender qué es una computadora<br>
+                🌟 Descubrir su importancia en nuestra vida
+            </div>
+            <div style="margin-top: 50px; font-size: 1.4rem; color: #FFD700;">
+                <em>"De máquinas gigantes a dispositivos en nuestro bolsillo"</em>
+            </div>
+        </div>
+        
+        <!-- Slide 2: Historia -->
+        <div class="slide history-slide">
+            <h2>📚 Historia de las Computadoras</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="computer-icon">🏛️</span>
+                    <div class="year">1940s</div>
+                    <div class="computer-type">ENIAC</div>
+                    <div class="description">30 toneladas<br>Tamaño de una casa<br>Tubos de vacío</div>
+                </div>
+                
+                <div class="timeline-item">
+                    <span class="computer-icon">🔧</span>
+                    <div class="year">1960s</div>
+                    <div class="computer-type">Transistores</div>
+                    <div class="description">Tamaño de refrigerador<br>Más eficientes<br>Menos calor</div>
+                </div>
+                
+                <div class="timeline-item">
+                    <span class="computer-icon">🖥️</span>
+                    <div class="year">1980s</div>
+                    <div class="computer-type">PCs</div>
+                    <div class="description">En los hogares<br>Apple & IBM<br>Revolución personal</div>
+                </div>
+                
+                <div class="timeline-item">
+                    <span class="computer-icon">📱</span>
+                    <div class="year">2020s</div>
+                    <div class="computer-type">Era Móvil</div>
+                    <div class="description">Smartphones<br>Tablets<br>Ultraportátiles</div>
+                </div>
+            </div>
+            
+            <div class="facts-list">
+                <div class="fact-item">
+                    💡 <span class="highlight">Dato curioso:</span> Tu smartphone es 100,000 veces más poderoso que las computadoras que llevaron al hombre a la luna
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: ¿Qué es una computadora? -->
+        <div class="slide definition-slide">
+            <h2>🤔 ¿Qué es una Computadora?</h2>
+            
+            <div class="definition-box">
+                <div class="definition-text">
+                    🧠 <strong>Es como un cerebro electrónico</strong><br>
+                    que procesa información a gran velocidad
+                </div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-around; margin: 40px 0; flex-wrap: wrap;">
+                <div style="text-align: center; margin: 20px;">
+                    <div style="font-size: 4rem;">📥</div>
+                    <h3>ENTRADA</h3>
+                    <p style="font-size: 1.3rem; color: #E6E6FA;">Recibe datos<br>(teclado, mouse, micrófono)</p>
+                </div>
+                
+                <div style="text-align: center; margin: 20px;">
+                    <div style="font-size: 4rem;">⚙️</div>
+                    <h3>PROCESAMIENTO</h3>
+                    <p style="font-size: 1.3rem; color: #E6E6FA;">Analiza y calcula<br>(millones de operaciones/segundo)</p>
+                </div>
+                
+                <div style="text-align: center; margin: 20px;">
+                    <div style="font-size: 4rem;">📤</div>
+                    <h3>SALIDA</h3>
+                    <p style="font-size: 1.3rem; color: #E6E6FA;">Muestra resultados<br>(pantalla, parlantes, impresora)</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Importancia en la vida diaria -->
+        <div class="slide importance-slide">
+            <h2>🌟 Importancia en Nuestra Vida</h2>
+            
+            <div class="daily-life-grid">
+                <div class="life-category">
+                    <span class="category-icon">🏠</span>
+                    <div class="category-title">En el Hogar</div>
+                    <div class="category-examples">
+                        • Ver películas y series<br>
+                        • Videollamadas familiares<br>
+                        • Hacer tareas escolares<br>
+                        • Juegos y entretenimiento
+                    </div>
+                </div>
+                
+                <div class="life-category">
+                    <span class="category-icon">📚</span>
+                    <div class="category-title">En la Educación</div>
+                    <div class="category-examples">
+                        • Clases virtuales<br>
+                        • Bibliotecas digitales<br>
+                        • Investigación online<br>
+                        • Proyectos multimedia
+                    </div>
+                </div>
+                
+                <div class="life-category">
+                    <span class="category-icon">💼</span>
+                    <div class="category-title">En el Trabajo</div>
+                    <div class="category-examples">
+                        • Médicos: diagnósticos<br>
+                        • Arquitectos: diseños 3D<br>
+                        • Artistas: arte digital<br>
+                        • Científicos: simulaciones
+                    </div>
+                </div>
+                
+                <div class="life-category">
+                    <span class="category-icon">🌍</span>
+                    <div class="category-title">Conexión Global</div>
+                    <div class="category-examples">
+                        • Redes sociales<br>
+                        • Comunicación instantánea<br>
+                        • Comercio electrónico<br>
+                        • Intercambio cultural
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Datos Asombrosos -->
+        <div class="slide intro-slide">
+            <h2>🚀 Datos Asombrosos</h2>
+            
+            <div class="facts-list">
+                <div class="fact-item">
+                    ⚡ Las computadoras modernas pueden hacer <span class="highlight">1 billón de operaciones por segundo</span>
+                </div>
+                
+                <div class="fact-item">
+                    🌐 Internet conecta a más de <span class="highlight">5 mil millones de personas</span> en todo el mundo
+                </div>
+                
+                <div class="fact-item">
+                    📏 ENIAC medía <span class="highlight">30 metros de largo</span> - ¡como 3 autobuses escolares!
+                </div>
+                
+                <div class="fact-item">
+                    🔋 Tu teléfono tiene más poder de cómputo que <span class="highlight">toda la NASA en 1969</span>
+                </div>
+                
+                <div class="fact-item">
+                    ⏰ En solo <span class="highlight">80 años</span> hemos pasado de máquinas gigantes a dispositivos de bolsillo
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px; font-size: 1.8rem; color: #FFD700;">
+                <strong>¡Las computadoras han transformado completamente nuestro mundo!</strong>
+            </div>
+        </div>
+    </div>
+    
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">⬅️ Anterior</button>
+        <button class="nav-btn" onclick="nextSlide()">Siguiente ➡️</button>
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('slideNumber').textContent = currentSlide + 1;
+        }
+        
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+        
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+        
+        // Navegación con teclado
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+        
+        // Auto-avance opcional (descomenta si lo necesitas)
+        // setInterval(nextSlide, 10000); // Cambia cada 10 segundos
+    </script>
+</body>
+</html>
